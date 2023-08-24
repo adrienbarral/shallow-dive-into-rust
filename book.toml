@@ -1,0 +1,6 @@
+[book]
+authors = ["Adrien BARRAL"]
+language = "en"
+multilingual = false
+src = "src"
+title = "Shallow dive into Rust"
