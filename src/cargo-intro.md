@@ -49,3 +49,21 @@ All conventions may be overridden, here I give you the default behaviour of carg
 * `src/main.rs` is the entry point of the executable of a crate (if the crate contains one executable)
 * `src/lib.rs` is the  entry point of the library of a crate.
 
+# Adding a crate as a dependency
+
+Cargo is a package manager so it is used to add and use other crate to your project.
+Simply add this crate in the `[dependencies]` section of the `Cargo.toml` file.
+Exemple to import the crate chrono (v0.4.29) : 
+```
+[dependencies]
+chrono = "0.4.29"
+```
+
+All crates are hosted on a website : [crates.io](https://crates.io/).
+
+Page of crates looks like that : 
+![CratesIO](images/crates_io.png)
+
+1. The line to add in cargo.toml to import the dependency
+2. Link to the full documentation
+3. The cover page of the documentation. For basic usage of the crate, if the documentation is good, you will find what you need here.

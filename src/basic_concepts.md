@@ -114,6 +114,11 @@ foo = 3;
 
 # Function
 
+Exemple of a rust function : 
+
+```rust
+fn is_prime
+```
 ## `return` keyoword is not mendatory
 
 
