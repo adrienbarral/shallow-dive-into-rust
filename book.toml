@@ -4,3 +4,6 @@ language = "en"
 multilingual = false
 src = "src"
 title = "Shallow dive into Rust"
+
+[output.html]
+additional-css = ["theme/reference.css"]

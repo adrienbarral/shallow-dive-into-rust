@@ -119,10 +119,18 @@ foo = 3;
 Exemple of a rust function : 
 
 ```rust
-fn is_prime
+fn is_odd(number: i32) -> bool {
+    return number % 2 != 0;
+}
 ```
-## `return` keyoword is not mendatory
 
+`return` keyoword is not mendatory. The previous function can  be written :
+
+```rust
+fn is_odd(number: i32) -> bool {
+    number % 2 != 0
+}
+```
 
 > **Exercice**
 >
@@ -195,7 +203,7 @@ impl Person {
 }
 ```
 
-This allow to write call this methods on the "me" object instanciated previously : 
+This allow to call this methods on the "me" object instanciated previously : 
 
 ```rust
 let me = Person {
@@ -207,6 +215,33 @@ let me = Person {
 me.whats_your_name();
 ```
 
+In C++ there is a notion of **constructor** method, called when we instanciate an object from the stack or the heap with the `new` keywords.
+There is no equivalent in rust. If you have nothing particular to do when creating an object, just do like in the previous exemple. Else, you can create a method in the implementation of this object that return `Self`. By convention this method will be called `from` or `new`.
+
+```rust
+struct Rectangle{
+    width: f32,
+    height: f32,
+    area: f32
+}
+
+impl Rectangle {
+    pub fn from(width: f32, height: f32) -> Self {
+        Rectangle{
+            width: width,
+            height: height,
+            area: width*height
+        }
+    }
+}
+```
+
+You can use this struct as it : 
+
+```rust
+let r = Rectangle::from(10.0, 15.0);
+println!("Area is : {}", r.area);
+```
 
 > **Exercice**
 >
@@ -221,16 +256,66 @@ me.whats_your_name();
 
   In the chrono crate it exists an enumerate called `Weekday` that can be really helpfull for that !
 
-
 </details>
-
-
 
 # Control Flow
 
 ## Loop
+An infinite loop. We must use `break` or `return` to getting out of this loop.
+
+```rust
+loop {
+    println!("What is the best programming language ever : ");
+    let line: String = text_io::read!("{}\n");
+    if line == String::from("rust") {
+        break;
+    } else {
+        println!("Try again");
+    }
+}
+println!("Good boy/girl !")
+```
+
+## while
+Exactly like in C/C++ and other language. The content of the loop is executed while a condition is true.
+
+There is no equivalent of `do / while` pattern of c++. If we want to run the loop code once before deciding use a boolean variable. Look at the previous exemple rewritten with a `while` loop :
+
+```rust
+let mut should_stop = false;
+while should_stop == false {
+    println!("What is the best programming language ever : ");
+    let line: String = text_io::read!("{}\n");
+    if line == String::from("rust") {
+        should_stop = true;
+    } else {
+        println!("Try again");
+    }
+}
+println!("Good boy/girl !")
+```
 
 ## for
 
-## while
+Allow to iterate over **iterable collection**.
+An array is an iterable collection :
 
+```rust
+let array = [10,20,30,40];
+let mut sum = 0;
+
+for elem in array {
+    sum = sum + elem;
+}
+assert_eq!(sum, 10+20+30+40);
+```
+`Range` is the list of number between two values and it is written `(val_min..val_max)`. This is also iterable.
+
+```rust
+for i in (0..10) {
+    println!("{}", i);
+}
+```
+will display `0 1 2 3 4 5 6 7 8 9`
+
+A lot of things are iterable, we will see later what the sentence "every things that implements the `Iterator` traits" means.
