@@ -141,4 +141,61 @@ fn main() {
 ```
 
 # Ownership
-Ici, il faut mettre les slides du cours exail.
+
+Example of this section is a copy of the [rustlang book](https://doc.rust-lang.org/book/ch04-01-what-is-ownership.html).
+
+When a data is on the heap, and we want to copy it, it exists 3 way to copy it. Consider the following example : 
+```rust
+let s1 = String::from("hello");
+let s2 = s1;
+```
+## Copy : 
+![copy](images/copy.svg)
+Here both S1 and S2 refer to the same data. We need to manually ensure that the data is freed when no longer used !
+
+## Clone : 
+![clone](images/clone.svg)
+This will duplicate data. This is safe, but time and memory consuming for non trivially copyable objects.
+
+## Move :
+![move](images/move.svg)
+
+After this, `s1` is no longer available.
+
+**This is how rust manage the copy of objects**
+
+He we can say that `s1` give **ownership** of data to `s2`
+
+This why in rust, writting the following code produce an error : 
+
+```rust
+let s1 = String::from("hello");
+let s2 = s1;
+println!("{} world !", s1);
+```
+
+# Reference
+But we can write : 
+```rust
+let s1 = String::from("hello");
+let s2 = &s1;
+println!("{} world !", s1);
+```
+Here type of `s2` is not a `String` but a `String&`, an reference to a string. We will say that `s2` **borrow** the string to `s1`.
+
+# Behaviour is different for stack variables
+
+Variables created on stack (scalar, boolean, and all variables implementing the Copy Traits), are not moved by default. They are cloned.
+So this is correct to write : 
+
+```rust
+let a = 1;
+let b = a;
+println!("A: {}", a);
+```
+
+> **Exercice**
+>
+> Create the content of the unit test `ex3_can_generate_full_name`
+>
+> Do the exercice explained in the main function of ex3.
