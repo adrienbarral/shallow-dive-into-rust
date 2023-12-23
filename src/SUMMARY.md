@@ -4,8 +4,9 @@
 - [Cargo : The rust package manager. Introducion](./cargo-intro.md)
 - [Basic programming concepts](./basic_concepts.md)
 - [Ownership and reference](./reference_ownership.md)
-- [Result and Option and a small introduction to functional programming]()
-- [The match control flow keyword]()
+- [The match control flow keyword](./match.md)
+- [Result and Option and a small introduction to functional programming](./result_option.md)
+
 
 - [Unsafe keyword]()
 ---
