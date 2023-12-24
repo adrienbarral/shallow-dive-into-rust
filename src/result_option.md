@@ -80,6 +80,15 @@ fn set_engine_commnad(, engine_rpm: f32, direction: Direction) -> Result<(), Com
 }
 ```
 
+> **Exercice**
+> We want to parse a tuple (pair) of real numbers separated by ";". 
+> Note that to define a variable of type tuple of float in rust we can write this : 
+> ```rust
+> let a: (f32, f32) = (1.2, 1.2);
+> ```
+> Write code to make passing the three unit tests `ex6_parse_xxxx`. Write a function that will take as argument a reference to a str `&str` and returning a `Result` with a tuple of float32 and if something goes wrong, a `ParseError` the enumerate defined at the top of the file.
+
+
 ## The ellison (?) operator
 
 
@@ -105,3 +114,4 @@ fn set_commands(rudder_angle_deg: f32, engine_rpm: f32, direction: Direction) ->
 }
 ```
 
+# How to use ellision operator when error types are differents
