@@ -114,4 +114,10 @@ fn set_commands(rudder_angle_deg: f32, engine_rpm: f32, direction: Direction) ->
 }
 ```
 
-# How to use ellision operator when error types are differents
+> **Exercice**
+> In the exercice 6 project, complete the unit test ex6_open_and_parse_xxxxx and write a function that open a file, read the first line of this file and parse it.
+
+
+Do you really think this is normal to write so much line of code for a simple thing like that ???
+
+To understand how to write a simpler solution we have to understand what is a **Trait**, and two very importants crates : **anyhow** and **thiserror**.

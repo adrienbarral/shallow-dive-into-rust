@@ -6,7 +6,7 @@
 - [Ownership and reference](./reference_ownership.md)
 - [The match control flow keyword](./match.md)
 - [Result and Option and a small introduction to functional programming](./result_option.md)
-
+- [Traits](./trait.md)
 
 - [Unsafe keyword]()
 ---
