@@ -199,3 +199,36 @@ println!("A: {}", a);
 > Create the content of the unit test `ex3_can_generate_full_name`
 >
 > Do the exercice explained in the main function of ex3.
+
+# Reference and mutability in one conde snippest : 
+
+```rust
+fn main() {
+  let mut s = String::from("Toto");
+  let mut s2 = String::from("Tata");
+  let s3 = String::from("Titi");
+  let r1 = &s;      // r1 has type "reference to a imutable string",
+                    // So we can't neither modify the string "Toto" nor affect r1
+                    // to another reference (we can't write r1 = s2)
+  println!("{r1}");
+
+  let mut r2 = &s; // Here r2 refer to the string Toto, but we can affect r2 to another string
+  r2 = &s2;        // has we do here
+  
+  let r3 = & mut s; // Here r3 is a reference to a mutable string, we can modify toto !
+  r3.push('!');
+  
+  // println!("{r1}");  // If we uncomment the following line we have a compilation error.
+  // Because r1 is a immutable reference of s, and r3 a mutbale reference of s. 
+  // It is not possible to have a mutable reference and an immutable reference on a same object
+  // Lifetime of r1 end the last time we use this variable. So at line 7. At line 14, when we create the 
+  // reference to mutable string, all immutable reference are "dead" (their lifetime has expired).
+  // So there is no problem.
+  // If we uncomment this println, lifetime of r1 end after the creation of mutable reference, this is not allowed
+  
+
+  
+  // let s4 = & mut s3; // This line doesn't compile because s3 is an immutable string, 
+                        // so we can't borrow it as a mutable reference !
+}
+```
