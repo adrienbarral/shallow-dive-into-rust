@@ -200,7 +200,7 @@ println!("A: {}", a);
 >
 > Do the exercice explained in the main function of ex3.
 
-# Reference and mutability in one conde snippest : 
+# Reference and mutability in one code snippest : 
 
 ```rust
 fn main() {
