@@ -1,13 +1,13 @@
 # Trait
 
-In all Object Oriented Programing (OOP) language, there is a feature allowing to share similar behaviour of object. In C++, we can use virtual methods and class inheritance. In Java, we define interfaces and subclasses... In rust we use 
+In all Object Oriented Programing (OOP) languages, there is a feature allowing to share similar behaviour of object. In C++, we can use virtual methods and class inheritance. In Java, we define interfaces and subclasses... In rust we use **Traits**.
 
 Here is an exemple in C++ that we will rewrite in rust : 
 
 ```c++
-class Identity{
+class Named {
 public :
-    Identity(const std::string& name): m_name(name){}
+    Named(const std::string& name): m_name(name){}
     std::string WhatsYourName() {
         return m_name;
     }
@@ -15,9 +15,9 @@ private :
     std::string m_name;
 }
 
-class Teacher : public Perspon {
+class Teacher : public Named {
     Teacher(const std::string& name, int salary):
-    Identity(name),
+    Named(name),
     m_salary(salary) {}
 }
 
@@ -32,17 +32,13 @@ trait Named {
     fn whats_your_name(&self) -> String;
 }
 
-struct Identity {
-    name: String,
-}
-
 struct Teacher {
-    identity: Identity,
+    name: String,
     salary: u32
 }
 
 struct Student {
-    identity: Identity,
+    name: String,
     class: String
 }
 
@@ -54,17 +50,21 @@ impl Named for Identity {
 
 impl Named for Teacher {
     fn whats_your_name(&self) -> String {
-        self.identity.name.clone()
+        self.name.clone()
     }
 }
 
 fn main() {
     let adrien = Teacher{
-        identity: Identity{name: String::from("Adrien BARRAL")},
+        name: String::from("Adrien BARRAL"),
         salary: 40_000
     };
-    println!("Hello {}", adrien.identity.whats_your_name());
-    println!("Hello again {}", adrien.whats_your_name());
+    let john = Student {
+        name: "John".to_string(),
+        class: "MIR".to_string()
+    }
+    println!("Hello {}", adrien.whats_your_name());
+    println!("Hello {}", john.whats_your_name());
 
 }
 ```
@@ -109,7 +109,8 @@ I would also be able to write the following signature :  `fn does_its_name_is_ni
 
 Static dispatching generate more code, but is more straight forward at runtime (it consume less CPU). Dynamic dispatching have a very slight CPU overload. In C++, we don't have choice, only dynamic dispatching is implemented (or maybe you can decide to do static dispatching if you master meta programming tricks.).
 
-**If you write code for something else than a Micro Controller, I strongly suggest to use dynamic dispatching.**. Because dynamic dispatching allow polymorphism like this : 
+**If you write code for something else than a Micro Controller, I strongly suggest to use dynamic dispatching.**. 
+Because dynamic dispatching allow the creation of factory methods and polymorphism like this : 
 
 ```rust
 fn main() {
@@ -126,6 +127,14 @@ fn main() {
 
 ## The `derive` macro is just code generation :
 
-You may notice than in C++ 
-## Exemple of realworld trait :
+You may notice than in C++ we can both share behaviour and data thanks to inheritance. In rust we can't. Behaviour is shared between objects thanks to traits, or methods that take references to traits in arguments. You will encounter a macro called **derive**. This macro will allow a good developper to create library that do kind of introspection at compile time on a rust structure.
+
+*I never had to create my own derive macro, most of the time if you think you need it is because you try to solve a problem in a C++ fashion rather than in a rust one*
+
+If you are intersted in exploring powerfull of procedural macro in rust, start by reading [this small article](https://web.mit.edu/rust-lang_v1.25/arch/amd64_ubuntu1404/share/doc/rust/html/book/first-edition/procedural-macros.html).
+
+## Exercice :
+
+You have to develop firmware of an automatic gate. The electronic department of the firm you work for did not found a universal motor controller. So, there is two configurations. One for light gates, and other one for heavy gates. Both architecures are shown in the figure bellow.
+![Architecture](./images/AutomaticGate.drawio.png)
 

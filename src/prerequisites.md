@@ -8,6 +8,7 @@
   * rust installable via [rustup](https://rustup.rs/)
   * VSCode with following extensions : 
      * rust-analyzer (from rustlang), downloadable [here](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer).
+     * CodeLLDB to enable debugging of your programs.
 
 # Test your installation : 
 

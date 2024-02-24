@@ -7,8 +7,8 @@
 - [The match control flow keyword](./match.md)
 - [Result and Option and a small introduction to functional programming](./result_option.md)
 - [Traits](./trait.md)
-
-- [Unsafe keyword]()
+- [Generics]()
+- [Multi threaded application]()
 ---
 - [Exercices](./launching_exercices.md)
 - [Bibliography](./bibliography.md)

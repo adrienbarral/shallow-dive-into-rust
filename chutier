@@ -6,3 +6,6 @@ Try not to write code that depends on the evaluation order of operands in compou
 See [this test] for an example of using this dependency.
 
 </div>
+
+Notes pour l'an prochain : 
+Dans les basics concepts; commencer par les control flow, y introduire match, avant de faire faire les exos sur l'enum.
