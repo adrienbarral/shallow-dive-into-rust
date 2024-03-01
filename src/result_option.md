@@ -118,6 +118,37 @@ fn set_commands(rudder_angle_deg: f32, engine_rpm: f32, direction: Direction) ->
 > In the exercice 6 project, complete the unit test ex6_open_and_parse_xxxxx and write a function that open a file, read the first line of this file and parse it.
 
 
-Do you really think this is normal to write so much line of code for a simple thing like that ???
+Do you really think this is normal to write a solution with such cyclomatic complexity for a simple problem like this one ???
 
-To understand how to write a simpler solution we have to understand what is a **Trait**, and two very importants crates : **anyhow** and **thiserror**.
+To understand how to write a simpler solution we have to understand what is a **Trait**, and two very importants crates : **anyhow** and **thiserror**. But meanwhile have a look to : 
+
+```rust
+#[derive(Debug, Error)]
+enum ParseError {
+    #[error("Not enough element to parse, 2 are required {0} found")]
+    NotEnoughElementError(usize),
+    #[error("Not enough line in  file")]
+    NotEnoughLineInFile,
+}
+
+fn parse_line(line: &str) -> anyhow::Result<(f32, f32)> {
+    let res: Vec<&str> = line.split(";").collect();
+
+    match (res.get(0), res.get(1)) {
+        (Some(elem1), Some(elem2)) => {
+            return Ok((elem1.parse::<f32>()?, elem2.parse::<f32>()?));
+        }
+        _ => return Err(ParseError::NotEnoughElementError(res.len()).into()),
+    }
+}
+
+fn parse_from_file(file: &Path) -> anyhow::Result<(f32, f32)> {
+    let mut file = File::open(file)?;
+    let mut contents = String::new();
+    file.read_to_string(&mut contents)?;
+    let first_line = contents
+        .lines().nth(0).ok_or::<ParseError>(ParseError::NotEnoughLineInFile.into())?;
+
+    parse_line(first_line)
+}
+```

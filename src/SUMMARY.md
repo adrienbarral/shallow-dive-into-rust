@@ -5,6 +5,7 @@
 - [Basic programming concepts](./basic_concepts.md)
 - [Ownership and reference](./reference_ownership.md)
 - [The match control flow keyword](./match.md)
+- [Slice type](./string_vs_str.md)
 - [Result and Option and a small introduction to functional programming](./result_option.md)
 - [Traits](./trait.md)
 - [Generics]()

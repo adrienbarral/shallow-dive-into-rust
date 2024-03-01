@@ -58,7 +58,7 @@ fn print_honors(grade: u8) -> Honours {
 
 To illustrate potential complexity of the "pattern" matched by the `match` keyword here is an example from the rustlang official book : 
 
-```
+```rust
 fn main() {
     let number = 13;
     // TODO ^ Try different values for `number`
