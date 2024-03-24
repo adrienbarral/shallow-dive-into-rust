@@ -21,9 +21,16 @@ class Teacher : public Named {
     m_salary(salary) {}
 }
 
+class Student: public Named {
+    Student(const std::string& name, const std::string& class):
+    Named(name),
+    m_class(class) {}
+}
+
 void main() {
     Teacher adrien("Adrien BARRAL", 40000);
-    std::cout << adrien.WhatsYourName() << std::endl;
+    Student john("John Smith", "Master MIR");
+    std::cout << adrien.WhatsYourName() " is a teacher of " << john.WhatsYourName() << std::endl;
 }
 ```
 
@@ -42,7 +49,7 @@ struct Student {
     class: String
 }
 
-impl Named for Identity {
+impl Named for Student {
     fn whats_your_name(&self) -> String {
         self.name.clone()
     }
@@ -69,16 +76,13 @@ fn main() {
 }
 ```
 
-Here, we can have the feeling that we don't share a lot of behaviour un rust (compared to C++).
+Here, we can have the feeling that we don't share a lot of behaviour in rust (compared to C++).
 
 But now, let create a method that guess if a name is nice or not : 
 
 ```rust
 fn does_its_name_is_nice(named: &dyn Named) -> bool {
-    if named.whats_your_name().contains("Adrien") {
-        return true;
-    }
-    return false;
+    named.whats_your_name().contains("Adrien")
 }
 ```
 
@@ -109,21 +113,22 @@ I would also be able to write the following signature :  `fn does_its_name_is_ni
 
 Static dispatching generate more code, but is more straight forward at runtime (it consume less CPU). Dynamic dispatching have a very slight CPU overload. In C++, we don't have choice, only dynamic dispatching is implemented (or maybe you can decide to do static dispatching if you master meta programming tricks.).
 
-**If you write code for something else than a Micro Controller, I strongly suggest to use dynamic dispatching.**. 
-Because dynamic dispatching allow the creation of factory methods and polymorphism like this : 
+Dynamic dispatching allow the creation of factory methods and polymorphism like this : 
 
 ```rust
 fn main() {
 
-    let everybody = Vec::<Box<dyn Named>>::new();
-    everybody.push(Box<dyn Named>::new(Teacher{...}));
-    everybody.push(Box<dyn Named>::new(Identity{...}));
+    let mut everybody = Vec::<Box<dyn Named>>::new();
+    everybody.push(Box::new(Teacher{...}));
+    everybody.push(Box::new(Student{...}));
 
     for named in everybody {
         println!("Hello : {}", named.whats_your_name());
     }
 }
 ```
+
+Here we can't write a vector with the following type : ```Vec<dyn Named>```because size of the inner type of a vector must known at compile time (to allow the Vector collection to allocate properly the memory).
 
 ## The `derive` macro is just code generation :
 
@@ -133,8 +138,63 @@ You may notice than in C++ we can both share behaviour and data thanks to inheri
 
 If you are intersted in exploring powerfull of procedural macro in rust, start by reading [this small article](https://web.mit.edu/rust-lang_v1.25/arch/amd64_ubuntu1404/share/doc/rust/html/book/first-edition/procedural-macros.html).
 
-## Exercice :
+## Exercice : Implementing a trait on a custom structure to use built-in functions.
+Imagine we have a custom structure describing a Person : 
+```rust
+struct Person {
+    name: String
+    age: u8
+}
+```
+
+We have a vector (convertible into a slice) of person, and we want to sort this vector by age. It exists a method ```sort``` on slice that have the following signature :
+```rust
+impl<T> [T]
+pub fn sort(&mut self)
+where
+    T: Ord
+{}
+```
+That we can read as : *We implement the method sort for a mutable slice of elements of type T where T implement the trait Ord*.
+
+So if you implement the trait Ord for the struct Person, we will be able to sort a vector of person (by age) by calling the method sort. This the what you have to do in the ex8.
+
+To implement the ```Ord``` trait, you have to [read the documentation](https://doc.rust-lang.org/std/cmp/trait.Ord.html) of this trait. This trait is defined with : 
+```rust
+pub trait Ord: Eq + PartialOrd
+```
+That means that a type implementing ```Ord``` must also implements ```Eq``` and ```PartialOrd```... By reading docs of all this traits, we can see that the following traits will need to be implemented : 
+![OrdTrait](./images/OrdTrait.png)
+
+When you will have finish this exercice, you may think that this is a lot of work for a so common problem.
+This is why it exists another sort method called ```sort_by```allowing to provide a comparison method.
+
+## Additional exercice : Polymorphism
 
 You have to develop firmware of an automatic gate. The electronic department of the firm you work for did not found a universal motor controller. So, there is two configurations. One for light gates, and other one for heavy gates. Both architecures are shown in the figure bellow.
 ![Architecture](./images/AutomaticGate.drawio.png)
+
+The problem is that both motor controller does not have the same communication protocol. Table bellow describe these protocols : 
+
+|Command|DC Controller|AC Controller|
+| ----- | ----------- | ----------- |
+| Interrogation | ? | ? | 
+| Get Position | POS? | POSITION? |
+| Set Speed | SET_POINT_SPEED,<f32> | SET_SPEED,<f32> |
+
+In response to a Get Position request, both controllers return a ```f32``` that you can parse with the builtin method : ```f32::parse(&str)```
+
+In response to an Interrogation request (?), the DC Controller wil reply with the string "DC", and the AC Controller with the string "AC".
+
+Ex7 is containing three sources files that you should not edit : 
+* main.rs : The main loop
+* emulator.rs : An emulator of the Motor and device to control this motor
+* plotter.rs : The boilerplate to display a plot of the motor position.
+
+You must only edit the file named controller.rs.
+
+In this file you must implement the MotorController trait accordingly to the protocol described above. Architecture of this file will be : 
+![architecture](./images/ControllersSTA.png)
+
+
 

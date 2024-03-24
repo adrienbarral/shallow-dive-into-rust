@@ -8,7 +8,7 @@
 - [Slice type](./string_vs_str.md)
 - [Result and Option and a small introduction to functional programming](./result_option.md)
 - [Traits](./trait.md)
-- [Generics]()
+- [Generics](./generics.md)
 - [Multi threaded application]()
 ---
 - [Exercices](./launching_exercices.md)

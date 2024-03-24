@@ -232,3 +232,31 @@ fn main() {
                         // so we can't borrow it as a mutable reference !
 }
 ```
+
+# Reference as struct attribute.
+
+A structure can have a reference as attribute. But doing this will imply that the lifetime of the variable referenced will be explicitly set : 
+
+```rust
+struct Person<'a> {
+    name: &'a String,
+    age: u8
+}
+
+impl<'a> Person<'a> {
+    pub fn say_hello(&self) {
+        println!("Hello, my name is : {}", self.name);
+    }
+}
+
+fn main() {
+    let adrien = String::from("Adrien");
+    
+    let me = Person{name: &adrien, age: 39};
+
+    me.say_hello();
+}
+```
+From the excellent course [here](https://rust-book.cs.brown.edu/ch10-03-lifetime-syntax.html), the lifetime annotation can be read as : *A reference to the Person struct can't outlive the reference it hold into its attribute name*
+
+This allow to create struct that doesn't own data in its attributes, but refer to them.

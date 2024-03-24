@@ -91,6 +91,7 @@ fn set_engine_commnad(, engine_rpm: f32, direction: Direction) -> Result<(), Com
 
 ## The ellison (?) operator
 
+Now, imagine we want to write a method that send both rudder and engine command. Naïveley we will write this method like this :
 
 ```rust
 fn set_commands(rudder_angle_deg: f32, engine_rpm: f32, direction: Direction) -> Result<(), CommandError>{

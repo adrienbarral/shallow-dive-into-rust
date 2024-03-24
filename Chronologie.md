@@ -22,10 +22,14 @@ T0 + 2h30 : fin.
 --- Fin de séance
 
 Séance 3 : 
-T0 : result & option (1h00)
+T0 : Reference in struct (15')
+result & option (1h15)
+Laisser un peu patauger sur exercice 6, puis montrer la solution sans ellision opérateur, puis avec.
+T0 + 1h30 Pause
 
-T0 + 1h : Les traits + exercice (1h30)
-Pause au milieu (15')
+T0 + 1h : Les traits + exercice (1h00)
+
+--- Fin de séance
 
 Séance 4 : 
 T0 + 1h45 : Les generics (45')
