@@ -11,6 +11,7 @@
 - [Generics](./generics.md)
 - [Multi threaded application](./multithreaded.md)
 - [Somme (very) cool crates](./crates.md)
+- [Organize you project source code](./organize.md)
 
 ---
 - [Exercices](./launching_exercices.md)
