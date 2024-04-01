@@ -59,4 +59,9 @@ where T: PartialOrd
 ```
 This is a method that use the **generic** feature of rust.
 
-Exercice : 
+# Exercice : 
+1. From scratch, create a structure that represent a complex number, and implement the traits Add and ans Sub to be able to use operators + and -.
+
+2. Implements the Default trait for our Complex type. Default value will be 0,0.
+
+3. Create a method called ```ìntegrate``` that will compute the summ of a type that can be converted into an iterator (implementing the IntoIterator trait), and rturning the integral of this collection. Signature of the method is really hard to find and understand. This is a "bonnus exercice". You can read [this SOF](https://stackoverflow.com/questions/45764578/what-does-rhs-refer-to-in-a-compiler-error-message-about-partialeq) question (and answear) to help you.

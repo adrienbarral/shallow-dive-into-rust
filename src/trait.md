@@ -91,16 +91,16 @@ We can use this method :
 ```rust
 fn main() {
     let adrien = Teacher{
-        identity: Identity{name: String::from("Adrien BARRAL")},
+        name: String::from("Adrien BARRAL"),
         salary: 40_000
     };
     
     let john = Student {
-        identity: Identity(name: String::from("John SMITH")),
+        name: String::from("John SMITH"),
         class: String::from("MIR Master")
     };
     assert_eq!(does_its_name_is_nice(&adrien), true);
-    assert_eq!(does_its_name_is_nice(&john.identity), false);
+    assert_eq!(does_its_name_is_nice(&john), false);
 }
 ```
 
