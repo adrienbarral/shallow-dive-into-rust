@@ -2,18 +2,19 @@ Séance 1 :
 T0 :
 Vérification des pré requis, que tout le monde ait bien la chaine de compil rust + vs code + rust extension.
 
-T0 + 1h15 : Fin de l'exercice ex2 sur la conversion m/s. Pause de 15 minutes.
+T0 + 1h15 : Fin de is_it_soon_weekend (juste avant les control flow)
 
 T0 + 2h00 : Fin de Basic programming concept
 
 --- Fin de séance
-T0 : Fin des control flow
 
-T0 + 15 : Ownership
+T0 : Match Control + Enumerate (45')
 
-T0 +1h00 : Fin du ownership exercice 3
+T0 + 1h00 : Ownership
 
-T0 + 1h30 : Match control (30')
+Pause
+
+T0 +2h00 : Fin du ownership exercice 3
 
 Pause
 

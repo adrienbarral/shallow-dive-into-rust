@@ -4,7 +4,7 @@ All variables are strictly typed, most of the time type is infered.
 
 
 ```
-let <variable name>[: <variable type>] = <variable value>
+let <variable name>[: <variable type>] = <variable value>;
 ```
 
 Both lines are strictly equivalents : 
@@ -139,38 +139,6 @@ fn is_odd(number: i32) -> bool {
 
 # Structures and basic objects
 
-## enumerates
-
-### Level 0 : As in C/C++ :
-```rust
-enum Gender {
-    Male,
-    Female
-}
-
-let gender: Gender = Gender::Male;
-```
-
-### Level 1 : We can attach data to enumerate values
-
-For exemple, imagine we want to define a function to control a robot speed, unit of the desired speed can be stored in an enum :
-
-```rust
-enum Velocity {
-    MilesPerHours(f32),
-    KiloMetersPerHours(f32),
-    Knot(f32)
-}
-```
-
-> **Exercice**
->
-> Make the test of ex2 passing by creating a function called `convert_to_meter_per_seconds` taking into argument a variable with type `Velocity` and returning a `f32` in meter per seconds.
-> Constant allowing to convert from the velocity unit to meter per seconds are given at the top of the source file.
-
-> **Exercice for next week**
-> * Why does I use the macro `assert_abs_diff_eq` rather than `assert_eq` to compare results in test `ex2_can_convert` ?
-> * If you try to use this macro in the `main` function, program will not compile. Why ? And why this is a good practice ? (tips, have a look to `Cargo.toml` file).
 
 ## `struct`
 
@@ -216,7 +184,7 @@ me.whats_your_name();
 ```
 
 In C++ there is a notion of **constructor** method, called when we instanciate an object from the stack or the heap with the `new` keywords.
-There is no equivalent in rust. If you have nothing particular to do when creating an object, just do like in the previous exemple. Else, you can create a method in the implementation of this object that return `Self`. By convention this method will be called `from` or `new`.
+There is no equivalent in rust. If you have nothing particular to do when creating an object, just do like in the previous exemple. Else, you can create a function in the implementation of this object that return `Self`. By convention this function will be called `from` or `new`.
 
 ```rust
 struct Rectangle{
