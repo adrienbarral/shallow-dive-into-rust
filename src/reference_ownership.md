@@ -164,7 +164,7 @@ After this, `s1` is no longer available.
 
 **This is how rust manage the copy of objects**
 
-He we can say that `s1` give **ownership** of data to `s2`
+Here we can say that `s1` give **ownership** of data to `s2`
 
 This why in rust, writting the following code produce an error : 
 
@@ -173,6 +173,9 @@ let s1 = String::from("hello");
 let s2 = s1;
 println!("{} world !", s1);
 ```
+# Why the moving strategy is the good ?
+
+That assure that there is only one owner of a data at a time. This is a way to avoid conccurency issue.
 
 # Reference
 But we can write : 
@@ -199,6 +202,68 @@ println!("A: {}", a);
 > Create the content of the unit test `ex3_can_generate_full_name`
 >
 > Do the exercice explained in the main function of ex3.
+
+# Reference and mutability : 
+
+Reference allows aliasing, that means that multiple variables can refer to the same data. Aliasing is intrinsically safe. But it can be dangerous when coupled to mutability. Rust prevent this by adding the following rules :
+
+* It could be several immutable references to a variable
+* But only one mutable reference to a variable
+
+Why it is dangerous to have a mutable reference and some immutable references at the same time ?
+
+Imagine the following code : 
+
+```rust
+let mut v: Vec<i32> = vec![1, 2, 3];
+let num: &i32 = &v[2];
+v.push(4);
+println!("Third element is {}", *num);
+```
+
+When we push a new element in the vector, the vector could be reallocated in memory. So the reference `num` could be invalidated.
+
+![copy](images/Reallocate_vector.png)
+
+In rust the following code produce an error :
+```
+error[E0502]: cannot borrow `v` as mutable because it is also borrowed as immutable
+ --> src/main.rs:5:1
+  |
+4 | let num: &i32 = &v[2];
+  |                  - immutable borrow occurs here
+5 | v.push(4);
+  | ^^^^^^^^^ mutable borrow occurs here
+6 | println!("Third element is {}", *num);
+  |                                 ---- immutable borrow later used here
+```
+
+`v`is borrewed as mutable because signature of the "push" method is : 
+```
+pub fn push(&mut self, value: T)
+```
+
+When we call push, we borrow `v` as mutable, and we can't borrow `v` as immutable at the same time. We can't borrow a variable as mutable if it is already borrowed.
+
+But, the following code is perfectly valid :
+```rust
+let mut v: Vec<i32> = vec![1, 2, 3];
+{
+    let num: &i32 = &v[2];
+    println!("Third element is {}", *num);
+}
+v.push(4);
+```
+
+Because rust (the borrow checker), understand that the scope of the immutable borrow is limited to the block `{}`. So, the mutable borrow is not in conflict with the immutable borrow when we call the push method.
+
+
+Let's recap by citing the [rustlang book](https://doc.rust-lang.org/book/ch04-02-references-and-borrowing.html) : 
+
+> * At any given time, you can have **either** one mutable reference **or** any number of immutable references.
+> * References must always be valid.
+
+To deeply understand everyhting, refer to this [very very powerfull explanation](https://rust-book.cs.brown.edu/ch04-02-references-and-borrowing.html).
 
 # Reference and mutability in one code snippest : 
 
